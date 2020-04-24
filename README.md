@@ -1,2 +1,3 @@
-# openjdk8-androidsdk28-nodejs13
-Docker image
+# Description
+
+All stuff resides within branches
