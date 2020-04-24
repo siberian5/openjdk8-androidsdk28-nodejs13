@@ -33,4 +33,5 @@ ARG  NDK_VERSION="20.0.5594570"
 RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "ndk;${NDK_VERSION}" >/dev/null
 
 
-
+RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "emulator" >/dev/null
+ENV PATH=$ANDROID_HOME/emulator/:$PATH
