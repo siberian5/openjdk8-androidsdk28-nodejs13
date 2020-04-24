@@ -24,6 +24,13 @@ RUN wget --quiet --output-document=/tmp/android-sdk.zip https://dl.google.com/an
 && mkdir /root/.android && touch /root/.android/repositories.cfg \
 && echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null \
 && echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "platform-tools" >/dev/null                           \
-&& echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null       
+&& echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
+
+
+ARG  NDK_VERSION="20.0.5594570"
+
+
+RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "ndk;${NDK_VERSION}" >/dev/null
+
 
 
