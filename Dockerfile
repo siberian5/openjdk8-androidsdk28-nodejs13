@@ -35,3 +35,20 @@ RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "ndk;${NDK_VE
 
 RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "emulator" >/dev/null
 ENV PATH=$ANDROID_HOME/emulator/:$PATH
+
+
+ARG  EMULATOR_IMAGE_PACK="system-images;android-22;default;armeabi-v7a"
+
+
+RUN echo y | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager "${EMULATOR_IMAGE_PACK}" >/dev/null
+
+
+RUN yes | /usr/local/lib/android-sdk-linux/tools/bin/sdkmanager --licenses >/dev/null
+
+
+RUN echo no | /usr/local/lib/android-sdk-linux/tools/bin/avdmanager -v create avd -f -n MyAVD -k "${EMULATOR_IMAGE_PACK}" -c 512M
+
+COPY props.ini .
+RUN cat /props.ini > /root/.android/avd/MyAVD.avd/config.ini
+
+RUN nohup emulator -ports 5554,5555 -avd MyAVD -no-snapshot-save -no-audio -no-window & adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;' ; disown
